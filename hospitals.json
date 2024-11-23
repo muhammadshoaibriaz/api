@@ -1,0 +1,120 @@
+[
+  {
+    "name": "City Hospital, Bahawalpur",
+    "address": "Opposite S.E College, Bahawalpur Cantt, Bahawalpur, Punjab 63100",
+    "rating": 4.5,
+    "image": "https://lh3.googleusercontent.com/p/AF1QipNfvoxoTa8izLWi6-Mjhye8qlMePx2AAET0ifcA=s680-w680-h510",
+    "timing": "Open 24 hours",
+    "about": "General Hospital is a state-of-the-art medical facility providing comprehensive healthcare services to the community. We are committed to delivering high-quality care with compassion and excellence.",
+    "doctors": [
+      {
+        "name": "Dr. John Doe",
+        "specialty": "Cardiology",
+        "rating": 4.8,
+        "image": "https://via.placeholder.com/150",
+        "patients": 2500,
+        "reviews": 120,
+        "about": "Dr. John Doe is a renowned cardiologist with over 20 years of experience...",
+        "description": "Dr. John Doe specializes in diagnosing and treating various heart conditions...",
+        "languages": ["English", "Spanish"],
+        "education": "M.D. in Cardiology, University of Medical Sciences, City",
+        "pricing": "$150 per consultation"
+      },
+      {
+        "name": "Dr. John Doe",
+        "specialty": "Cardiology",
+        "rating": 4.8,
+        "image": "https://via.placeholder.com/150",
+        "patients": 2500,
+        "reviews": 120,
+        "about": "Dr. John Doe is a renowned cardiologist with over 20 years of experience...",
+        "description": "Dr. John Doe specializes in diagnosing and treating various heart conditions...",
+        "languages": ["English", "Spanish"],
+        "education": "M.D. in Cardiology, University of Medical Sciences, City",
+        "pricing": "$150 per consultation"
+      },
+      {
+        "name": "Dr. John Doe",
+        "specialty": "Cardiology",
+        "rating": 4.8,
+        "image": "https://via.placeholder.com/150",
+        "patients": 2500,
+        "reviews": 120,
+        "about": "Dr. John Doe is a renowned cardiologist with over 20 years of experience...",
+        "description": "Dr. John Doe specializes in diagnosing and treating various heart conditions...",
+        "languages": ["English", "Spanish"],
+        "education": "M.D. in Cardiology, University of Medical Sciences, City",
+        "pricing": "$150 per consultation"
+      }
+    ]
+  },
+  {
+    "name": "Bahawal Victoria Hospital",
+    "address": "Circular Rd, Bahawalpur Cantt, Bahawalpur, Punjab 63100",
+    "rating": 4.3,
+    "image": "https://lh3.googleusercontent.com/p/AF1QipPuEdZim4tSQfbbo5ReFwXKkBQX8Lq4LFIWjYwJ=s680-w680-h510",
+    "timing": "Open 24 hours",
+    "about": "Bahawal Victoria Hospital is a hospital located in Bahawalpur, Pakistan. It is named after Nawab of Bahawalpur's British wife, Victoria. It started as a Civil Hospital with an outdoor department, a dispensary, and an operating theatre in 1876. In 1906, this health unit was named Bahawal Victoria Hospital.[2] Now, it is a hub of clinical expertise both in specialties as well as in sub-specialties with a multitude of patients visiting the hospital. In 1952, a benevolent extension of Nursing School was brought about with an anticipation to render rash and prompt basic health amenities. Classes leading to L.S.M.F were also started in 1956.[3][4][5][6] Its nexus with Quaid e Azam Medical College (QAMC) in 1970 has transformed it into one of the largest tertiary care facilities in the province of Punjab. It is now a 2200-bed, fully equipped, tertiary-care hospital with all medical and surgical specialities, serving large number of patients in south Punjab.[7][8] It facilitates undergraduate medical students of Quaid-e-Azam Medical College, nursing students of allied nursing school, paramedics and many post-graduate trainees.",
+    "doctors": [
+      {
+        "name": "Dr. Michael Johnson",
+        "specialty": "Orthopedics",
+        "rating": 4.6,
+        "image": "https://via.placeholder.com/150",
+        "patients": 1800,
+        "reviews": 80,
+        "about": "Dr. Michael Johnson is a skilled orthopedic surgeon...",
+        "description": "Dr. Michael Johnson specializes in surgical and non-surgical treatments for musculoskeletal injuries...",
+        "languages": ["English", "German"],
+        "education": "M.D. in Orthopedics, University of Medical Sciences, City",
+        "pricing": "$200 per consultation"
+      }
+    ]
+  },
+  {
+    "name": "Fatima Jinnah Hospital",
+    "address": "Fatima Jinnah Hospital, Noor Mahal Rd, near Nadra Office, Muhammadia Colony, Bahawalpur, Punjab 63100",
+    "rating": 4.3,
+    "image": "https://lh3.googleusercontent.com/p/AF1QipNWbTcrhPW_kFT43Kq3z6cLXYzl1Y14g4psDrey=s680-w680-h510",
+    "timing": "Open 24 hours",
+    "about": "Dr. Michael Johnson is a skilled orthopedic surgeon...",
+    "doctors": [
+      {
+        "name": "Dr. Michael Johnson",
+        "specialty": "Orthopedics",
+        "rating": 4.6,
+        "image": "https://via.placeholder.com/150",
+        "patients": 1800,
+        "reviews": 80,
+        "about": "Dr. Michael Johnson is a skilled orthopedic surgeon...",
+        "description": "Dr. Michael Johnson specializes in surgical and non-surgical treatments for musculoskeletal injuries...",
+        "languages": ["English", "German"],
+        "education": "M.D. in Orthopedics, University of Medical Sciences, City",
+        "pricing": "$200 per consultation"
+      }
+    ]
+  },
+  {
+    "name": "Al-Hayyat Hospital",
+    "address": "291 C Commercial Area, Satellite Town, Bahawalpur, Punjab 63100",
+    "rating": 4.3,
+    "image": "https://lh3.googleusercontent.com/p/AF1QipPr18O1Oi6zdL7dk4R6lX7ECfTYHLj24XPsLRE=s680-w680-h510",
+    "timing": "Monday to Saturday 9am to 5pm Sunday Closed",
+    "about": "Al-Hayyat Hospital, Bahawalpur. 503 likes. All surgical procedures under supervision of expert surgeon's. Ultrasound related to all gynecologic.",
+    "doctors": [
+      {
+        "name": "Dr. Michael Johnson",
+        "specialty": "Orthopedics",
+        "rating": 4.6,
+        "image": "https://via.placeholder.com/150",
+        "patients": 1800,
+        "reviews": 80,
+        "about": "Dr. Michael Johnson is a skilled orthopedic surgeon...",
+        "description": "Dr. Michael Johnson specializes in surgical and non-surgical treatments for musculoskeletal injuries...",
+        "languages": ["English", "German"],
+        "education": "M.D. in Orthopedics, University of Medical Sciences, City",
+        "pricing": "$200 per consultation"
+      }
+    ]
+  }
+]
