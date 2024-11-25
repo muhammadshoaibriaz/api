@@ -7,11 +7,15 @@ const controllers = require("./routes/route");
 const mongoDb = require("./db/connect");
 const mongooseDatabase = require("./userDb");
 
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(cors());
 
-app.use("/", controllers);
+// app.use("/", controllers);
+
+app.get("/", (req, res) => {
+  res.send({ message: "Hello World!" });
+});
 
 app.listen(PORT, async (req, res) => {
   try {
