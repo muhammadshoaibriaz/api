@@ -13,6 +13,7 @@ const Appointments = mongoose.Schema({
   booked_time: { type: String },
   doctorId: { type: mongoose.Schema.Types.ObjectId, ref: "DocAccounts" },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+  patientId: { type: String },
   genderType: { type: String },
   age: { type: String },
   problem: { type: String },

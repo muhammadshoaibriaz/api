@@ -3,7 +3,9 @@ const appointments = require("../models/appointments");
 const hospitals = require("../hospitals.json");
 const specialist = require("../specialist.json");
 const DocAccounts = require("../models/docSchemas/doctors");
-const Messages = require("../models/messages");
+const cloudinary = require("cloudinary");
+const Message = require("../models/messages");
+
 // main first page of the app
 const HomePage = async (req, res) => {
   res.send(hospitals);
@@ -38,8 +40,13 @@ const Create_user = async (req, res) => {
     age,
     chosenDate,
     joined,
+    disease,
   } = req.body;
-  // console.log(username, phone_number, email, password);
+
+  const uploadResponse = await cloudinary.uploader.upload(avatar, {
+    upload_preset: "my_preset",
+  });
+
   const newUser = new Users({
     username,
     email,
@@ -48,10 +55,11 @@ const Create_user = async (req, res) => {
     gender,
     city,
     blood,
-    avatar,
+    avatar: uploadResponse.secure_url,
     age,
     chosenDate,
     joined,
+    disease,
   });
   try {
     // Query the database to find a user with the provided email
@@ -84,6 +92,18 @@ const UpdateUser = async (req, res) => {
     res.status(200).json(update_user);
   } catch (error) {
     res.status(500).json({ message: "Server not found" });
+  }
+};
+
+// get patient details
+
+const GetPatientDetails = async (req, res) => {
+  const patientId = req.params.details;
+  try {
+    const response = await Users.findById(patientId);
+    res.status(200).json(response);
+  } catch (error) {
+    console.log("Error getting patient details", error.message);
   }
 };
 
@@ -142,6 +162,7 @@ const Appointment = async (req, res) => {
       genderType,
       age,
       problem,
+      patientId,
     } = req.body;
 
     // Check if doctor exists
@@ -168,6 +189,7 @@ const Appointment = async (req, res) => {
       status,
       genderType,
       age,
+      patientId,
       problem,
     });
 
@@ -264,37 +286,70 @@ const Hospitals = async (req, res) => {
 };
 
 // messages endpoint
-const WriteMessage = async (req, res) => {
+
+const SendMessage = async (req, res) => {
+  const { userId, doctorId, sender, content, time } = req.body;
   try {
-    const { senderId, recipientId, text } = req.body;
-
-    const message = new Messages({ senderId, recipientId, text });
+    const message = new Message({
+      userId,
+      doctorId,
+      sender,
+      content,
+      time,
+      read: false,
+    });
     await message.save();
-
-    res.status(201).send("Message sent successfully");
+    res.status(201).json(message);
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal server error");
+    res.status(400).send(error);
   }
 };
 
 const GetMessages = async (req, res) => {
-  const userId = req.params.userId;
+  const { userId, doctorId } = req.params;
   try {
-    const message = await Messages.find({
-      $or: [{ senderId: userId }, { recipientId: userId }],
-    });
-    console.log(message);
-    res.json(message);
+    const messages = await Message.find({ userId, doctorId }).sort("timestamp");
+    res.send(messages);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).send(error);
   }
 };
 
 const GetAllMessages = async (req, res) => {
   try {
-    const message = await Messages.find();
-    res.status(200).json(message).send(message);
+    const messages = await Message.find();
+    res.status(200).json(messages);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+const GetPatientMessages = async (req, res) => {
+  try {
+    const doctorId = req.params.doctorId;
+    const messages = await Message.find({ doctorId });
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const CheckUnreadMessages = async (req, res) => {
+  const { doctorId } = req.params;
+  try {
+    const unreadMessages = await Message.find({ doctorId, read: false });
+    res.status(200).json(unreadMessages);
+    // res.status(200).json({ unreadCount: unreadMessages.length });
+  } catch (error) {
+    res.status(500).json({ error: error.message + "Messages not available" });
+  }
+};
+
+const MarkMessagesAsRead = async (req, res) => {
+  const { doctorId } = req.params;
+  try {
+    await Message.updateMany({ doctorId, read: false }, { read: true });
+    res.status(200).json({ message: "Messages marked as read" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -313,9 +368,13 @@ module.exports = {
   GetAppointmentsByUserId,
   UpdateUser,
   DeleteAccount,
-  WriteMessage,
+  SendMessage,
   GetMessages,
-  GetAllMessages,
   UpdateStatus,
   GetAppointmentsByDoctorId,
+  GetPatientDetails,
+  CheckUnreadMessages,
+  MarkMessagesAsRead,
+  GetAllMessages,
+  GetPatientMessages,
 };

@@ -6,8 +6,8 @@ const postBlog = new mongoose.Schema({
   title: { type: String },
   description: { type: String },
   url: { type: String },
-  likes: { type: Number },
-  views: { type: Number },
+  likes: { type: Number, default: 0 },
+  views: { type: Number, default: 0 },
   user_img: { type: String },
 });
 

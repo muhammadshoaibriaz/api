@@ -11,6 +11,7 @@ const User = mongoose.Schema({
   city: { type: String },
   blood: { type: String },
   age: { type: String },
+  disease: { type: String },
   chosenDate: { type: String },
   status: { type: String, default: "pending" },
 });
