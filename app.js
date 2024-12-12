@@ -11,11 +11,11 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-// app.use("/", controllers);
+app.use("/", controllers);
 
-app.get("/", (req, res) => {
-  res.send({ message: "Hello World!" });
-});
+// app.get("/", (req, res) => {
+//   res.send({ message: "Hello World!" });
+// });
 
 app.listen(PORT, async (req, res) => {
   try {
