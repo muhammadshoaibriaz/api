@@ -13,15 +13,11 @@ app.use(bodyParser.json());
 
 app.use("/", controllers);
 
-// app.get("/", (req, res) => {
-//   res.send({ message: "Hello World!" });
-// });
-
 app.listen(PORT, async (req, res) => {
   try {
     console.log("Server is running on port ", PORT);
-    await mongoDb();
-    await mongooseDatabase();
+    await mongoDb;
+    await mongooseDatabase;
   } catch (error) {
     console.log("error connecting to the database: ", error);
   }
