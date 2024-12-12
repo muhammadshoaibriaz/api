@@ -20,6 +20,8 @@ app.use("/", controllers);
 app.listen(PORT, async (req, res) => {
   try {
     console.log("Server is running on port ", PORT);
+    await mongoDb();
+    await mongooseDatabase();
   } catch (error) {
     console.log("error connecting to the database: ", error);
   }
