@@ -6,7 +6,6 @@ const client = new MongoClient(uri);
 
 const connectMongoDb = async () => {
   try {
-    console.log("object thik hai");
     await client.connect();
     console.log("Connected to MongoDB");
   } catch (err) {
@@ -14,4 +13,4 @@ const connectMongoDb = async () => {
   }
 };
 
-module.exports = connectMongoDb();
+module.exports = connectMongoDb;
