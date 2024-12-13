@@ -5,6 +5,7 @@ const specialist = require("../specialist.json");
 const DocAccounts = require("../models/docSchemas/doctors");
 const cloudinary = require("cloudinary");
 const Message = require("../models/messages");
+const bcrypt = require("bcrypt");
 
 // main first page of the app
 const HomePage = async (req, res) => {
@@ -25,7 +26,6 @@ const UserProfile = async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 // creating a new user account
 const Create_user = async (req, res) => {
   const {
@@ -43,38 +43,37 @@ const Create_user = async (req, res) => {
     disease,
   } = req.body;
 
-  const uploadResponse = await cloudinary.uploader.upload(avatar, {
-    upload_preset: "my_preset",
-  });
-
-  const newUser = new Users({
-    username,
-    email,
-    password,
-    phone_number,
-    gender,
-    city,
-    blood,
-    avatar: uploadResponse.secure_url,
-    age,
-    chosenDate,
-    joined,
-    disease,
-  });
   try {
+    const uploadResponse = await cloudinary.uploader.upload(avatar, {
+      upload_preset: "my_preset",
+    });
+
+    const hashPassword = await bcrypt.hash(password, 10);
+    const newUser = new Users({
+      username,
+      email,
+      password: hashPassword,
+      phone_number,
+      gender,
+      city,
+      blood,
+      avatar: uploadResponse.secure_url,
+      age,
+      chosenDate,
+      joined,
+      disease,
+    });
+
     // Query the database to find a user with the provided email
     const existingUser = await Users.findOne({ email });
-
     if (existingUser) {
-      res.status(200).json({ exists: true });
-      console.log("Email already in use");
-      return;
+      return res.status(200).json({ exists: true });
     }
     await newUser.save();
-    res.status(200).json({ exists: false });
+    return res.status(200).json({ exists: false });
   } catch (error) {
     console.error("Error checking user existence:", error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -127,10 +126,18 @@ const LogIn = async (req, res) => {
   try {
     // Check if user exists
     const user = await Users.findOne({ email, password });
+    const hashPassword = await bcrypt.hash(password, 10);
+    // how to confirm password hashPassword
+
     if (!user) {
       return res.status(401).json({ error: "Invalid email/password" });
     }
     // Compare passwords
+
+    if (bcrypt.compare(password, hashPassword)) {
+      console.log("exact password");
+    }
+
     if (password != user.password) {
       return res.status(401).json({ error: "Invalid password" });
     }
