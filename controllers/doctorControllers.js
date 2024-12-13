@@ -163,7 +163,7 @@ const GetBlog = async (req, res) => {
 const CreateDocAccount = async (req, res) => {
   const doctor_data = req.body;
   const { email, image } = doctor_data;
-  // console.log("Email is ", email);
+  console.log("Email is ", doctor_data);
   if (!image) {
     return res.status(400).json({ error: "Image is required" });
   }
@@ -183,9 +183,16 @@ const CreateDocAccount = async (req, res) => {
       await newDoctor.save();
     } else {
       console.log("Email! Already in use");
+      return res
+        .status(200)
+        .json({ exists: true, message: "User already exists." });
     }
   } catch (error) {
     console.log("Error creating doctor account!", error);
+    console.error("Error checking email:", error);
+    return res
+      .status(500)
+      .json({ message: "Server error. Please try again later." });
   }
 };
 
@@ -198,7 +205,7 @@ const UpdateDoctorProfile = async (req, res) => {
       res.status(404).json({ message: "Doctor not exist" });
     }
     res.json(isExist);
-    res.status(200).json({ message: "Doctor updated successfully" });
+    return res.status(200).json({ message: "Doctor updated successfully" });
   } catch (err) {
     console.log("Error updating doctors", err.message);
   }
