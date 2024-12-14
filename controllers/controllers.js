@@ -43,28 +43,28 @@ const Create_user = async (req, res) => {
     disease,
   } = req.body;
 
+  const uploadResponse = await cloudinary.uploader.upload(avatar, {
+    upload_preset: "my_preset",
+  });
+
+  const hashPassword = await bcrypt.hash(password, 10);
+  const newUser = new Users({
+    username,
+    email,
+    password: hashPassword,
+    phone_number,
+    gender,
+    city,
+    blood,
+    avatar: uploadResponse.secure_url,
+    age,
+    chosenDate,
+    joined,
+    disease,
+  });
+
+  // Query the database to find a user with the provided email
   try {
-    const uploadResponse = await cloudinary.uploader.upload(avatar, {
-      upload_preset: "my_preset",
-    });
-
-    const hashPassword = await bcrypt.hash(password, 10);
-    const newUser = new Users({
-      username,
-      email,
-      password: hashPassword,
-      phone_number,
-      gender,
-      city,
-      blood,
-      avatar: uploadResponse.secure_url,
-      age,
-      chosenDate,
-      joined,
-      disease,
-    });
-
-    // Query the database to find a user with the provided email
     const existingUser = await Users.findOne({ email });
     if (existingUser) {
       return res.status(200).json({ exists: true });
@@ -125,12 +125,12 @@ const LogIn = async (req, res) => {
   const { email, password } = req.body;
   try {
     // Check if user exists
-    const user = await Users.findOne({ email, password });
+    const user = await Users.findOne({ email });
     const hashPassword = await bcrypt.hash(password, 10);
     // how to confirm password hashPassword
 
     if (!user) {
-      return res.status(401).json({ error: "Invalid email/password" });
+      return res.status(401).json({ error: "Invalid email address!" });
     }
     // Compare passwords
     const credential = await bcrypt.compare(password, hashPassword);
@@ -146,28 +146,8 @@ const LogIn = async (req, res) => {
 
 // book appointments with doctor
 const Appointment = async (req, res) => {
+  const { doctorId } = req.body;
   try {
-    const {
-      doctor_name,
-      doc_image,
-      patient_name,
-      patient_image,
-      email,
-      phoneNumber,
-      day,
-      specialist,
-      hospital,
-      time,
-      booked_time,
-      doctorId,
-      userId,
-      status,
-      genderType,
-      age,
-      problem,
-      patientId,
-    } = req.body;
-
     // Check if doctor exists
     const doctor = await DocAccounts.findById(doctorId);
     if (!doctor) {
@@ -175,26 +155,7 @@ const Appointment = async (req, res) => {
     }
 
     // Create new appointment
-    const newAppointment = new appointments({
-      doctor_name,
-      doc_image,
-      patient_name,
-      patient_image,
-      email,
-      phoneNumber,
-      day,
-      specialist,
-      hospital,
-      time,
-      booked_time,
-      doctorId,
-      userId,
-      status,
-      genderType,
-      age,
-      patientId,
-      problem,
-    });
+    const newAppointment = new appointments(req.body);
 
     await newAppointment.save();
     const currentDate = new Date();
@@ -207,8 +168,6 @@ const Appointment = async (req, res) => {
     console.error("Error while booking appointment:", error);
     res.status(500).json({ message: "Failed to book appointment" });
   }
-
-  // Implement background process to remove expired appointments
 };
 
 // get appointments by the user id
