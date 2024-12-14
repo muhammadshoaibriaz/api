@@ -5,7 +5,7 @@ const specialist = require("../specialist.json");
 const DocAccounts = require("../models/docSchemas/doctors");
 const cloudinary = require("cloudinary");
 const Message = require("../models/messages");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 // main first page of the app
 const HomePage = async (req, res) => {
@@ -133,12 +133,8 @@ const LogIn = async (req, res) => {
       return res.status(401).json({ error: "Invalid email/password" });
     }
     // Compare passwords
-
-    if (bcrypt.compare(password, hashPassword)) {
-      console.log("exact password");
-    }
-
-    if (password != user.password) {
+    const credential = await bcrypt.compare(password, hashPassword);
+    if (!credential) {
       return res.status(401).json({ error: "Invalid password" });
     }
     return res.status(200).json({ message: "Login successful", user });
